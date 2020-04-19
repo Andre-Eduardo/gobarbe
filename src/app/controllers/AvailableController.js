@@ -7,7 +7,7 @@ import {
   format,
   isAfter,
 } from 'date-fns';
-import { op } from 'sequelize';
+import { Op } from 'sequelize';
 import Appointment from '../models/Appointment';
 
 class AvailableController {
@@ -19,10 +19,10 @@ class AvailableController {
     const searchDate = Number(date);
     const appointments = await Appointment.findAll({
       where: {
-        provide_id: req.params.providerId,
+        provider_id: req.params.providerId,
         canceled_at: null,
         date: {
-          [op.between]: [startOfDay(searchDate), endOfDay(searchDate)],
+          [Op.between]: [startOfDay(searchDate), endOfDay(searchDate)],
         },
       },
     });
@@ -53,7 +53,7 @@ class AvailableController {
           !appointments.find(a => format(a.date, 'HH:mm') === time),
       };
     });
-    return res.jason(avaiable);
+    return res.json(avaiable);
   }
 }
 export default new AvailableController();

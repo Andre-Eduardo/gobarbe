@@ -6,9 +6,9 @@ class Appointment extends Model {
     super.init(
       {
         date: Sequelize.DATE,
-        canceled_at: Sequelize.STRING,
+        canceled_at: Sequelize.STRING, // mudar pra data
         past: {
-          type: sequelize.VIRTUAL,
+          type: Sequelize.VIRTUAL,
           get() {
             return isBefore(this.date, new Date());
           },
